@@ -5,10 +5,9 @@ var router = express.Router();
 router.get('/', function(request, response, next) {
 
 
-    response.send('This is the motion page');
-    console.log(request);
-    console.log(response);
-    console.log(date.now());
+
+    console.log("REQ" + request);
+    console.log("RES" + response);
 
 });
 
