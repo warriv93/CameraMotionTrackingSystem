@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+</head>
+<body>
+<h1><%= title %></h1>
+<p>Welcome to <%= title %></p>
+
+
+Response here: <p id="lblResponse">fill me in</p>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $.ajax({
+            url: "/" ,
+        }).done(function(user) {
+            console.log("WOHO")
+            // here you have a  complete user object that you can use
+        });
+    });
+</script>
+
+</body>
+</html>
