@@ -1,28 +1,33 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
-</head>
-<body>
-<h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
+    <head>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css'/>
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
 
 
-Response here: <p id="lblResponse">fill me in</p>
+    Response here: <p id="lblResponse">fill me in</p>
 
-<script type="text/javascript">
-    $(document).ready(function() {
-        $.ajax({
-            url: "/"
-        }).done(function (response) {
-            console.log("WOHO");
-            console.log("response:" + response);
-            // here you have a  complete user object that you can use
+    <script type="text/javascript">
+        $(document).ready(function() {
+            debugger;
+            $.ajax({
+                url: "/",
+                data: "yooyoyo"
+            }).success(function (dataResponse, textStatus) {
+                console.log("WOHO");
+                console.log(dataResponse);
+                console.log(textStatus);
+                // here you have a  complete user object that you can use
+            }).fail(function(response) {
+                console.log("error: " + response.statusText);
+            });
         });
-    });
-</script>
+    </script>
 
-</body>
+    </body>
 </html>

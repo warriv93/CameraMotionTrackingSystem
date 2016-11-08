@@ -17,7 +17,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -32,30 +32,30 @@ app.use('/motion', motion);
 //DATABASE
 
 var mongoose = require('mongoose');
-
-var mongoURI = "mongodb://localhost/test2";
-var db = mongoose.connect(mongoURI, function (err) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('Finally connected!!!');
-
-        //Create a schema for Book
-        var bookSchema = mongoose.Schema({
-            name: String,
-            //Also creating index on field isbn
-            isbn: {type: String, index: true},
-            author: String,
-            pages: Number
-        });
-        //Create a Model by using the schema defined above
-        //Optionally one can provide the name of collection where the instances
-        //of this model get stored. In this case it is "mongoose_demo". Skipping
-        //this value defaults the name of the collection to plural of model name i.e books.
-        var Book = mongoose.model('Book', bookSchema);
-        console.log('DB done');
-    }
-});
+//
+// var mongoURI = "mongodb://localhost/test2";
+// var db = mongoose.connect(mongoURI, function (err) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log('Finally connected!!!');
+//
+//         //Create a schema for Book
+//         var bookSchema = mongoose.Schema({
+//             name: String,
+//             //Also creating index on field isbn
+//             isbn: {type: String, index: true},
+//             author: String,
+//             pages: Number
+//         });
+//         //Create a Model by using the schema defined above
+//         //Optionally one can provide the name of collection where the instances
+//         //of this model get stored. In this case it is "mongoose_demo". Skipping
+//         //this value defaults the name of the collection to plural of model name i.e books.
+//         var Book = mongoose.model('Book', bookSchema);
+//         console.log('DB done');
+//     }
+// });
 
 //Get all the books
 app.get('/book', function (req, res) {
