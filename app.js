@@ -52,7 +52,7 @@ var db = mongoose.connect(mongoURI, function (err) {
         //of this model get stored. In this case it is "mongoose_demo". Skipping
         //this value defaults the name of the collection to plural of model name i.e books.
         var Book = mongoose.model('Book', bookSchema);
-
+        console.log('DB done');
     }
 });
 
