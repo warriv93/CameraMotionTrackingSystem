@@ -15,9 +15,10 @@ Response here: <p id="lblResponse">fill me in</p>
 <script type="text/javascript">
     $(document).ready(function() {
         $.ajax({
-            url: "/" ,
-        }).done(function(user) {
-            console.log("WOHO")
+            url: "/"
+        }).done(function (response) {
+            console.log("WOHO");
+            console.log("response:" + response);
             // here you have a  complete user object that you can use
         });
     });
