@@ -1,6 +1,18 @@
 /**
  * Created by msi on 04-Nov-16.
  */
+$(document).ready(function() {
+    $.ajax({
+        url: "/",
+    }).success(function (dataResponse, textStatus) {
+        console.log("WOHO");
+        console.log(dataResponse);
+        console.log(textStatus);
+        // here you have a  complete user object that you can use
+    }).fail(function(response) {
+        console.log("error: " + response.statusText);
+    });
+});
 
 google.charts.load('visualization', '1.0', { packages:["timeline"] });
 google.charts.setOnLoadCallback(start);

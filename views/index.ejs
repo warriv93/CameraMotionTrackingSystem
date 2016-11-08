@@ -5,29 +5,20 @@
     <link rel='stylesheet' href='/stylesheets/style.css'/>
     <link rel='icon' href='/favicon.ico'/>
     <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="js/main.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/looks.css">
 </head>
 <body>
 <h1><%= title %></h1>
 <p>Welcome to <%= title %></p>
 
-    Response here: <p id="lblResponse">fill me in</p>
+Response here: <p id="lblResponse">fill me in</p>
 
-    <script type="text/javascript">
-        $(document).ready(function() {
-            debugger;
-            $.ajax({
-                url: "/",
-                data: "yooyoyo"
-            }).success(function (dataResponse, textStatus) {
-                console.log("WOHO");
-                console.log(dataResponse);
-                console.log(textStatus);
-                // here you have a  complete user object that you can use
-            }).fail(function(response) {
-                console.log("error: " + response.statusText);
-            });
-        });
-    </script>
+<!--Div that will hold the chart-->
+<div id="timeline"></div>
 
-    </body>
+<div id="advancedTimeline"></div>
+</body>
 </html>
