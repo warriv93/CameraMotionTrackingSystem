@@ -6,8 +6,9 @@ router.get('/', function(request, response, next) {
 
 
     response.send('This is the motion page');
-    // console.log(res);
-
+    console.log(request);
+    console.log(response);
+    console.log(date.now());
 
 });
 

@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 
 //ROUTES
 var index = require('./routes/index');
-var users = require('./routes/users');
 var motion = require('./routes/motion');
 
 var app = express();
@@ -26,8 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //ROUTES
 app.use('/', index);
-app.use('/users', users);
-app.use('/motion', motion);
+app.use('/api/camera', motion);
 
 //DATABASE
 
