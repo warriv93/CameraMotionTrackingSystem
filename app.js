@@ -32,10 +32,21 @@ app.use('/api/camera', function (req, res) {
     if (res){
         var currentTime = new Date;
 
+        // Testing adding things
+        var BjornTheBook = new Book({
+            name: "From camera",
+            isbn: "1111",
+            author: "Nisse",
+            pages: 200
+        });
+        BjornTheBook.save(function(err) {
+            if(err) {
+                throw err;
+            }
+            console.log("Saved!");
+        });
 
-
-
-
+        // This is going to run while saving to the DB
         console.log(currentTime.getHours() +"   "+ currentTime.getMinutes());
     }
 });
@@ -67,20 +78,6 @@ var db = mongoose.connect(mongoURI, function (err) {
         //this value defaults the name of the collection to plural of model name i.e books.
         Book = mongoose.model('Book', bookSchema);
         console.log('DB connection done!');
-
-        // Testing adding things
-        var BjornTheBook = new Book({
-            name: "Loka",
-            isbn: "1337",
-            author: "Bear",
-            pages: 100
-        });
-        BjornTheBook.save(function(err) {
-            if(err) {
-                throw err;
-            }
-            console.log("Saved!");
-        });
     }
 });
 
