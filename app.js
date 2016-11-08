@@ -32,13 +32,14 @@ app.use('/motion', motion);
 //DATABASE
 
 var mongoose = require('mongoose');
+var Book;
 
 var mongoURI = "mongodb://localhost/test2";
 var db = mongoose.connect(mongoURI, function (err) {
     if (err) {
         console.log(err);
     } else {
-        console.log('Finally connected!!!');
+        console.log('Finally DB connected!!!');
 
         //Create a schema for Book
         var bookSchema = mongoose.Schema({
@@ -52,8 +53,22 @@ var db = mongoose.connect(mongoURI, function (err) {
         //Optionally one can provide the name of collection where the instances
         //of this model get stored. In this case it is "mongoose_demo". Skipping
         //this value defaults the name of the collection to plural of model name i.e books.
-        var Book = mongoose.model('Book', bookSchema);
-        console.log('DB done');
+        Book = mongoose.model('Book', bookSchema);
+        console.log('DB connection done!');
+
+        // Testing adding things
+        var BjornTheBook = new Book({
+            name: "Loka",
+            isbn: "1337",
+            author: "Bear",
+            pages: 100
+        });
+        BjornTheBook.save(function(err) {
+            if(err) {
+                throw err;
+            }
+            console.log("Saved!");
+        });
     }
 });
 
