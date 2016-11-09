@@ -39,7 +39,7 @@ var db = mongoose.connect(mongoURI, function (err) {
         console.log('DB connected!!!');
         //Create a schema for Book
         var motionSchema = mongoose.Schema({
-            Date: {type: String, index: true}
+            Date: {type: Date, index: true}
         });
         //Create a Model by using the schema defined above
         Motion = mongoose.model('Motion', motionSchema);
@@ -50,7 +50,9 @@ var db = mongoose.connect(mongoURI, function (err) {
 app.use('/', index);
 app.use('/api/camera', function (req, res) {
     if (res){
-        var currentTime = new Date;
+        var currentTime = new Date();
+        currentTime.setHours(currentTime.getHours()+1);
+        console.log(currentTime);
 
         // Testing adding things
         new Motion({
@@ -61,16 +63,22 @@ app.use('/api/camera', function (req, res) {
             }
             console.log("Motion data Saved to DB!");
         });
-
-        // This is going to run while saving to the DB
-        console.log(currentTime.getHours() +":"+ currentTime.getMinutes());
     }
 });
 
 //Get all the books
 app.get('/motion/:from/:to/', function (req, res) {
     //Find all the books in the system.
-    Motion.find({}, function (err, result) {
+    console.log(req.params.from);
+    console.log(req.params.to);
+    var from = req.params.from;
+    var to = req.params.to;
+    Motion.find({
+        Date:{
+            $lte:to,
+            $gte:from
+        }
+    }, function (err, result) {
         if (err) throw err;
         //Save the result into the response object.
         res.json(result);
