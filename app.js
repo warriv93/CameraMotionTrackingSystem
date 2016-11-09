@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 //ROUTES
 var index = require('./routes/index');
-var motion = require('./routes/motion');
+//var motion = require('./routes/motion');
 
 var app = express();
 app.use(function(req, res, next) {
@@ -68,7 +68,7 @@ app.use('/api/camera', function (req, res) {
 });
 
 //Get all the books
-app.get('/motion', function (req, res) {
+app.get('/motion/:from/:to/', function (req, res) {
     //Find all the books in the system.
     Motion.find({}, function (err, result) {
         if (err) throw err;

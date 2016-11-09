@@ -2,15 +2,20 @@
  * Created by msi on 04-Nov-16.
  */
 $(document).ready(function() {
-    $.ajax({
-        url: "/motion",
-    }).success(function (dataResponse, textStatus) {
-        console.log("WOHO");
-        console.log(dataResponse);
-        console.log(textStatus);
-        // here you have a  complete user object that you can use
-    }).fail(function(response) {
-        console.log("error: " + response.statusText);
+    $("#daytimeSubmit").click(function() {
+        var daytimeFrom = $("#daytimeFrom").val();
+        var daytimeTo = $("#daytimeTo").val();
+
+        $.ajax({
+            url: "/motion/" + daytimeFrom + "/" + daytimeTo + "/",
+        }).success(function (dataResponse, textStatus) {
+            console.log("WOHO");
+            console.log(dataResponse);
+            console.log(textStatus);
+            // here you have a  complete user object that you can use
+        }).fail(function(response) {
+            console.log("error: " + response.statusText);
+        });
     });
 });
 
