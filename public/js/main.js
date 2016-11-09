@@ -3,10 +3,10 @@
  */
 $(document).ready(function() {
     $.ajax({
-        url: "/",
+        url: "/motion",
     }).success(function (dataResponse, textStatus) {
         console.log("WOHO");
-        // console.log(dataResponse);
+        console.log(dataResponse);
         console.log(textStatus);
         // here you have a  complete user object that you can use
     }).fail(function(response) {

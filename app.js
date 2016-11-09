@@ -26,6 +26,26 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//DATABASE
+var mongoose = require('mongoose');
+
+//Global mongoose model variable
+var Motion;
+var mongoURI = "mongodb://localhost/test2";
+var db = mongoose.connect(mongoURI, function (err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log('DB connected!!!');
+        //Create a schema for Book
+        var motionSchema = mongoose.Schema({
+            Date: {type: String, index: true}
+        });
+        //Create a Model by using the schema defined above
+        Motion = mongoose.model('Motion', motionSchema);
+    }
+});
+
 //ROUTES
 app.use('/', index);
 app.use('/api/camera', function (req, res) {
@@ -33,59 +53,24 @@ app.use('/api/camera', function (req, res) {
         var currentTime = new Date;
 
         // Testing adding things
-        var BjornTheBook = new Book({
-            name: "From camera",
-            isbn: "1111",
-            author: "Nisse",
-            pages: 200
-        });
-        BjornTheBook.save(function(err) {
+        new Motion({
+            Date: currentTime
+        }).save(function(err) {
             if(err) {
                 throw err;
             }
-            console.log("Saved!");
+            console.log("Motion data Saved to DB!");
         });
 
         // This is going to run while saving to the DB
-        console.log(currentTime.getHours() +"   "+ currentTime.getMinutes());
+        console.log(currentTime.getHours() +":"+ currentTime.getMinutes());
     }
 });
-
-//DATABASE
-
-var mongoose = require('mongoose');
-
-var Book;
-
-var mongoURI = "mongodb://localhost/test2";
-var db = mongoose.connect(mongoURI, function (err) {
-    if (err) {
-        console.log(err);
-    } else {
-        console.log('Finally DB connected!!!');
-
-        //Create a schema for Book
-        var bookSchema = mongoose.Schema({
-            name: String,
-            //Also creating index on field isbn
-            isbn: {type: String, index: true},
-            author: String,
-            pages: Number
-        });
-        //Create a Model by using the schema defined above
-        //Optionally one can provide the name of collection where the instances
-        //of this model get stored. In this case it is "mongoose_demo". Skipping
-        //this value defaults the name of the collection to plural of model name i.e books.
-        Book = mongoose.model('Book', bookSchema);
-        console.log('DB connection done!');
-    }
-});
-
 
 //Get all the books
-app.get('/book', function (req, res) {
+app.get('/motion', function (req, res) {
     //Find all the books in the system.
-    Book.find({}, function (err, result) {
+    Motion.find({}, function (err, result) {
         if (err) throw err;
         //Save the result into the response object.
         res.json(result);
