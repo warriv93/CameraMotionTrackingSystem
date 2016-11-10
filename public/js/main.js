@@ -9,9 +9,9 @@ $(document).ready(function() {
         $.ajax({
             url: "/motion/" + daytimeFrom + "/" + daytimeTo + "/",
         }).success(function (dataResponse, textStatus) {
-            console.log("WOHO");
             console.log(dataResponse);
-            console.log(textStatus);
+            $("#timelineHeader").text("Timeline");
+            google.charts.setOnLoadCallback(start(dataResponse));
             // here you have a  complete user object that you can use
         }).fail(function(response) {
             console.log("error: " + response.statusText);
@@ -20,20 +20,19 @@ $(document).ready(function() {
 });
 
 google.charts.load('visualization', '1.0', { packages:["timeline"] });
-google.charts.setOnLoadCallback(start);
 
-function start() {
+function start(dataResponse) {
     // Pick the HTML element
     var timelineHolder = document.getElementById("timeline");
     // Create an instance of Timeline
     var timeline = new google.visualization.Timeline(timelineHolder);
-    var dataTable = prepareDataTable();
+    var dataTable = prepareDataTable(dataResponse);
     // Draw the timeline
     timeline.draw(dataTable, config);
 }
 
 
-function prepareDataTable() {
+function prepareDataTable(dataResponse) {
     var dataTable = new google.visualization.DataTable();
 
     // Add columns
@@ -43,11 +42,13 @@ function prepareDataTable() {
     dataTable.addColumn({ type: 'date', id: 'Departure Date'});
 
     //Add Rows
-    dataTable.addRow(['Camera 1', 'Jonas home',
-        new Date(2014, 1, 15, 14), new Date(2014, 1, 15, 16)]);
-
-    dataTable.addRow(['Camera 1', 'Jonas home',
-        new Date(2014, 1, 15, 17), new Date(2014, 1, 15, 20)]);
+    for(var i = 0; i < dataResponse.length; i++) {
+        var date = new Date(dataResponse[i].Date);
+        dataTable.addRow(['Camera 1', 'Jonas home',
+            new Date(date.getYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes()),
+            new Date(date.getYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes()+1)
+            ]);
+    }
 
     return dataTable;
 }

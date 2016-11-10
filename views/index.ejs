@@ -11,9 +11,6 @@
 </head>
 <body>
 <h1><%= title %></h1>
-<p>Welcome to <%= title %></p>
-
-Response here: <p id="lblResponse">fill me in</p>
 
 <div id="daytimeContainer">
     From <input type="datetime-local" id="daytimeFrom" value="2016-11-09T00:00" />
@@ -21,7 +18,7 @@ Response here: <p id="lblResponse">fill me in</p>
     <button id="daytimeSubmit">Get data</button>
 </div>
 
-<h2>Timeline</h2>
+<h2 id="timelineHeader"></h2>
 <!--Div that will hold the chart-->
 <div id="timeline"></div>
 

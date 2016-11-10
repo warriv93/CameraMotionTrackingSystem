@@ -51,7 +51,7 @@ app.use('/', index);
 app.use('/api/camera', function (req, res) {
     if (res){
         var currentTime = new Date();
-        currentTime.setHours(currentTime.getHours()+1);
+        //currentTime.setHours(currentTime.getHours()+1);
         console.log(currentTime);
 
         // Testing adding things
