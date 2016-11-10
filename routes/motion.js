@@ -6,8 +6,8 @@ router.get('/', function(request, response, next) {
 
 
 
-    console.log("REQ" + request);
-    console.log("RES" + response);
+    console.log('REQ' + request);
+    console.log('RES' + response);
 
 });
 

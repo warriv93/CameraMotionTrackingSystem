@@ -22,7 +22,9 @@ app.set('view engine', 'ejs');
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -31,15 +33,18 @@ var mongoose = require('mongoose');
 
 //Global mongoose model variable
 var Motion;
-var mongoURI = "mongodb://localhost/test2";
-var db = mongoose.connect(mongoURI, function (err) {
+var mongoURI = 'mongodb://localhost/test2';
+var db = mongoose.connect(mongoURI, function(err) {
     if (err) {
         console.log(err);
     } else {
         console.log('DB connected!!!');
         //Create a schema for Book
         var motionSchema = mongoose.Schema({
-            Date: {type: Date, index: true}
+            Date: {
+                type: Date,
+                index: true
+            }
         });
         //Create a Model by using the schema defined above
         Motion = mongoose.model('Motion', motionSchema);
@@ -48,8 +53,8 @@ var db = mongoose.connect(mongoURI, function (err) {
 
 //ROUTES
 app.use('/', index);
-app.use('/api/camera', function (req, res) {
-    if (res){
+app.use('/api/camera', function(req, res) {
+    if (res) {
         var currentTime = new Date();
         //currentTime.setHours(currentTime.getHours()+1);
         console.log(currentTime);
@@ -58,35 +63,32 @@ app.use('/api/camera', function (req, res) {
         new Motion({
             Date: currentTime
         }).save(function(err) {
-            if(err) {
+            if (err) {
                 throw err;
             }
-            console.log("Motion data Saved to DB!");
+            console.log('Motion data Saved to DB!');
         });
     }
 });
 
 //Get all the books
-app.get('/motion/:from/:to/', function (req, res) {
+app.get('/motion/:from/:to/', function(req, res) {
     //Find all the books in the system.
     console.log(req.params.from);
     console.log(req.params.to);
     var from = req.params.from;
     var to = req.params.to;
     Motion.find({
-        Date:{
-            $lte:to,
-            $gte:from
+        Date: {
+            $lte: to,
+            $gte: from
         }
-    }, function (err, result) {
+    }, function(err, result) {
         if (err) throw err;
         //Save the result into the response object.
         res.json(result);
     });
 });
-
-
-
 
 
 
@@ -102,14 +104,14 @@ app.get('/motion/:from/:to/', function (req, res) {
 // });
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function(err, req, res, next) {
     // set locals, only providing error in development
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};
