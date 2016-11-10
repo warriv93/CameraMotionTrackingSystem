@@ -55,9 +55,9 @@ function prepareDataTable(dataResponse) {
     //Add Rows
     for (var i = 0; i < dataResponse.length; i++) {
         var date = new Date(dataResponse[i].Date);
-        dataTable.addRow(['Camera 1', 'Jonas home',
-            new Date(date.getYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes()),
-            new Date(date.getYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes() + 1)
+        dataTable.addRow(['Camera 1', date.toLocaleString(),
+            new Date(date.getYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes(), 0),
+            new Date(date.getYear(), date.getMonth(), date.getDay(), date.getHours(), date.getMinutes(), 1)
         ]);
     }
 

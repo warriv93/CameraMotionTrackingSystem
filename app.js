@@ -49,6 +49,7 @@ var db = mongoose.connect(mongoURI, function(err) {
 
 //ROUTES
 app.use('/', index);
+
 app.use('/api/camera', function(req, res) {
     if (res) {
         var currentTime = new Date();
@@ -82,19 +83,6 @@ app.get('/motion/:from/:to/', function(req, res) {
         res.json(result);
     });
 });
-
-
-
-
-
-
-
-
-
-// app.use(function (req, res, next) {
-//     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-//     next();
-// });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
