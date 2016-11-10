@@ -1,6 +1,3 @@
-/**
- * Created by msi on 04-Nov-16.
- */
 $(document).ready(function() {
     $('#daytimeSubmit').click(function() {
         var daytimeFrom = $('#daytimeFrom').val();
@@ -10,9 +7,10 @@ $(document).ready(function() {
             url: '/motion/' + daytimeFrom + '/' + daytimeTo + '/',
         }).success(function(dataResponse, textStatus) {
             console.log(dataResponse);
-            $('#timelineHeader').text('Timeline');
-            google.charts.setOnLoadCallback(start(dataResponse));
-            // here you have a  complete user object that you can use
+            if(dataResponse.length > 0) {
+                google.charts.setOnLoadCallback(start(dataResponse));
+                $('#timelineHeader').text('Timeline');
+            }
         }).fail(function(response) {
             console.log('error: ' + response.statusText);
         });
@@ -33,14 +31,13 @@ function start(dataResponse) {
     timeline.draw(dataTable, config);
 }
 
-
 function prepareDataTable(dataResponse) {
     var dataTable = new google.visualization.DataTable();
 
     // Add columns
     dataTable.addColumn({
         type: 'string',
-        id: 'Label'
+        id: 'Camera'
     });
     dataTable.addColumn({
         type: 'string',
@@ -48,11 +45,11 @@ function prepareDataTable(dataResponse) {
     });
     dataTable.addColumn({
         type: 'date',
-        id: 'Arrival Date'
+        id: 'From Date'
     });
     dataTable.addColumn({
         type: 'date',
-        id: 'Departure Date'
+        id: 'To Date'
     });
 
     //Add Rows

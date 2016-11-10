@@ -4,10 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-//ROUTES
 var index = require('./routes/index');
-//var motion = require('./routes/motion');
 
 var app = express();
 app.use(function(req, res, next) {
@@ -18,7 +15,6 @@ app.use(function(req, res, next) {
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -39,7 +35,7 @@ var db = mongoose.connect(mongoURI, function(err) {
         console.log(err);
     } else {
         console.log('DB connected!!!');
-        //Create a schema for Book
+        //Create a schema
         var motionSchema = mongoose.Schema({
             Date: {
                 type: Date,
@@ -59,7 +55,6 @@ app.use('/api/camera', function(req, res) {
         //currentTime.setHours(currentTime.getHours()+1);
         console.log(currentTime);
 
-        // Testing adding things
         new Motion({
             Date: currentTime
         }).save(function(err) {
@@ -71,9 +66,7 @@ app.use('/api/camera', function(req, res) {
     }
 });
 
-//Get all the books
 app.get('/motion/:from/:to/', function(req, res) {
-    //Find all the books in the system.
     console.log(req.params.from);
     console.log(req.params.to);
     var from = req.params.from;
