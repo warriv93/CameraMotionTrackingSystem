@@ -1,16 +1,16 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var index = require('./routes/index');
+var express = require('express'); // Minimal and flexible Node.js web application framework
+var path = require('path'); // Helper functions to help make path manipulation easier
+var favicon = require('serve-favicon'); // For serving the favicon
+var logger = require('morgan'); // HTTP request logger middleware
+var bodyParser = require('body-parser'); // Parse incoming request bodies in a middleware before your handlers, available under the req.body property
+var index = require('./routes/index')
 
 var app = express();
 app.use(function(req, res, next) {
     req.headers['if-none-match'] = 'no-match-for-this';
     next();
 });
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -21,7 +21,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //DATABASE
@@ -48,8 +47,10 @@ var db = mongoose.connect(mongoURI, function(err) {
 });
 
 //ROUTES
+//called when loading the webpage
 app.use('/', index);
 
+//called by the camera to invoke a timestamp on when a motion occured infront of the camera that is saved in the database
 app.use('/api/camera', function(req, res) {
     if (res) {
         var currentTime = new Date();
@@ -67,6 +68,7 @@ app.use('/api/camera', function(req, res) {
     }
 });
 
+// Called by the website client with params to specify the time frame of the data
 app.get('/motion/:from/:to/', function(req, res) {
     console.log(req.params.from);
     console.log(req.params.to);
