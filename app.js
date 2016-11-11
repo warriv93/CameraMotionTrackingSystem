@@ -1,9 +1,9 @@
 var express = require('express'); // Minimal and flexible Node.js web application framework
-var path = require('path'); // Helper functions to help make path manipulation easier
-var favicon = require('serve-favicon'); // For serving the favicon
+var path = require('path'); // Helper functions to make path manipulation easier
+var favicon = require('serve-favicon'); // For serving the favicon (not really needed but removes a 404 request)
 var logger = require('morgan'); // HTTP request logger middleware
-var bodyParser = require('body-parser'); // Parse incoming request bodies in a middleware before your handlers, available under the req.body property
-var index = require('./routes/index')
+var bodyParser = require('body-parser'); // Parse incoming request bodies before handlers, then available under the req.body property
+var index = require('./routes/index') // Our HTML page
 
 var app = express();
 app.use(function(req, res, next) {
@@ -11,10 +11,10 @@ app.use(function(req, res, next) {
     next();
 });
 
-// view engine setup
+// view engine setup. Some magic to map views to routes/page
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+// General page setup
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -23,17 +23,16 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//DATABASE
-var mongoose = require('mongoose');
-
-//Global mongoose model variable
+// DATABASE
+var mongoose = require('mongoose'); // Driver to use MongoDB
+// Global mongoose model variable
 var Motion;
-var mongoURI = 'mongodb://localhost/test2';
+var mongoURI = 'mongodb://localhost/motions';
 var db = mongoose.connect(mongoURI, function(err) {
     if (err) {
         console.log(err);
     } else {
-        console.log('DB connected!!!');
+        console.log('DB connected');
         //Create a schema
         var motionSchema = mongoose.Schema({
             Date: {
@@ -54,7 +53,6 @@ app.use('/', index);
 app.use('/api/camera', function(req, res) {
     if (res) {
         var currentTime = new Date();
-        //currentTime.setHours(currentTime.getHours()+1);
         console.log(currentTime);
 
         new Motion({
@@ -63,17 +61,17 @@ app.use('/api/camera', function(req, res) {
             if (err) {
                 throw err;
             }
-            console.log('Motion data Saved to DB!');
+            console.log('Motion data saved to DB');
         });
     }
 });
 
 // Called by the website client with params to specify the time frame of the data
-app.get('/motion/:from/:to/', function(req, res) {
-    console.log(req.params.from);
-    console.log(req.params.to);
+app.get('/api/motion/:from/:to/', function(req, res) {
     var from = req.params.from;
     var to = req.params.to;
+    console.log(from);
+    console.log(to);
     Motion.find({
         Date: {
             $lte: to,
