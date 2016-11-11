@@ -25,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // DATABASE
 var mongoose = require('mongoose'); // Driver to use MongoDB
+mongoose.Promise = global.Promise; // Solves https://github.com/Automattic/mongoose/issues/4291
 // Global mongoose model variable
 var Motion;
 var mongoURI = 'mongodb://localhost/motions';
