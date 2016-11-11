@@ -3,7 +3,7 @@ var path = require('path'); // Helper functions to make path manipulation easier
 var favicon = require('serve-favicon'); // For serving the favicon (not really needed but removes a 404 request)
 var logger = require('morgan'); // HTTP request logger middleware
 var bodyParser = require('body-parser'); // Parse incoming request bodies before handlers, then available under the req.body property
-var index = require('./routes/index') // Our HTML page
+var index = require('./routes/index') // Our index page and starting point
 
 var app = express();
 app.use(function(req, res, next) {
