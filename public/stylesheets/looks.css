@@ -1,12 +1,38 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    padding: 0;
+    margin: 0;
 }
 
 a {
-  color: #00B7FF;
+    color: #00B7FF;
 }
 
-#advancedTimeline, #timeline {
-  height: 380px;
+#content, #timeline {
+    text-align: center;
+}
+
+#timeline {
+    
+}
+
+#bg {
+    background-image: url("../img/bg.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    z-index: -1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    -webkit-filter: blur(4px); -moz-filter: blur(4px); -o-filter: blur(4px); -ms-filter: blur(4px); filter: blur(4px);
+    opacity: 0.5;
+}
+
+#content {
+    opacity: 1;
+    position: relative;
+    z-index: 1;
+    padding: 50px;
 }
