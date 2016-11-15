@@ -64,6 +64,7 @@ app.use('/api/camera', function(req, res) {
             }
             console.log('Motion data saved to DB');
         });
+        res.send("The event saved successfully");
     }
 });
 
